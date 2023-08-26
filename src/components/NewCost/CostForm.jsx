@@ -1,42 +1,39 @@
 import React, { useState } from "react";
 import "./CostForm.css";
 
-function CostForm() {
-  // const [name, setName] = useState('')
-  // const [amount, setAmount] = useState('')
-  // const [date, setDate] = useState('')
+function CostForm(props) {
+  const [userInputName, setUserInputName] = useState('')
+  const [userInputAmount, setUserInputAmount] = useState('')
+  const [userInputDate, setUserInputDate] = useState('')
 
-  const [userInput, setUserInput] = useState({
-    name: "",
-    amouunt: "",
-    date: "",
-  });
+  // const [userInput, setUserInput] = useState({
+  //   name: "",
+  //   amouunt: "",
+  //   date: "",
+  // });
 
   const nameChangeHandler = (event) => {
-    setUserInput((previousState) => {
-      return {
-        ...previousState,
-        amount: event.target.value,
-      };
-    });
+    setUserInputName(event.target.value)
   };
   const amountChangeHandler = (event) => {
-    setUserInput((previousState) => {
-      return {
-        ...previousState,
-        amount: event.target.value,
-      };
-    });
+    setUserInputAmount(event.target.value)
   };
   const dateChangeHandler = (event) => {
-    setUserInput((previousState) => {
-      return {
-        ...previousState,
-        amount: event.target.value,
-      };
-    });
+    setUserInputDate(event.target.value)
   };
 
+  const submitHandler = (event) => {
+    event.preventDefault()
+    const costData = {
+      name: userInputName,
+      amount: userInputAmount,
+      date: new Date(userInputDate)
+    }
+    props.onSaveCostData(costData)
+    setUserInputName('')
+    setUserInputAmount('')
+    setUserInputDate('')
+  }
   // const nameChangeHandler = (event) => {
   //   setName(event.target.value)
   // }
@@ -44,15 +41,15 @@ function CostForm() {
   //   setAmount(event.target.value)
   // }
   // const dateChangeHandler = (event) => {
-  //   setDate(event.target.value)
+  //   setDate(event.target.value) 
   // }
 
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="new-cost__controls">
         <div className="new-cost__control">
           <label>Name</label>
-          <input type="text" onChange={nameChangeHandler} />
+          <input type="text" value={userInputName} onChange={nameChangeHandler} />
         </div>
         <div className="new-cost__control">
           <label>Summ</label>
@@ -61,6 +58,7 @@ function CostForm() {
             min="0.01"
             step="0.01"
             onChange={amountChangeHandler}
+            value={userInputAmount}
           />
         </div>
         <div className="new-cost__control">
@@ -70,6 +68,7 @@ function CostForm() {
             min="2019-01-01"
             step="2022-12-31"
             onChange={dateChangeHandler}
+            value={userInputDate}
           />
         </div>
         <div className="new-cost__actions">
