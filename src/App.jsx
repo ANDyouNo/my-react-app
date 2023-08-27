@@ -6,7 +6,7 @@ const App = () => { //возможна стрелочная запись
     {
       id: 'c1',
       date: new Date(2023, 2, 23),
-      description: "Macbook",
+      description: "Notebook",
       amount: 999,
     },
     {
