@@ -5,7 +5,7 @@ import React, {useState} from "react";
 const INIT_COSTS = [
   {
     id: 'c1',
-    date: new Date(2023, 2, 23),
+    date: new Date(2022, 2, 23),
     description: "Notebook",
     amount: 999,
   },

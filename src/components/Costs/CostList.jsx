@@ -5,25 +5,38 @@ import CostsFilter from "./CostsFilter";
 import React, { useState } from "react";
 
 function CostList(props) {
+  const [selectedYear, setSelectedYear] = useState("2021");
 
-  const [selectedYear, setSelectedYear] = useState('2021')
- 
   const yearChangeHandler = (year) => {
-    setSelectedYear(year)
+    setSelectedYear(year);
+  };
+
+  const filtredCosts = props.cost.filter(cost => {
+    return cost.date.getFullYear().toString() === selectedYear;
+  })
+
+  let costContent = <p>В этом году расходов нет</p> 
+
+  if (filtredCosts.length > 0) {
+    costContent = filtredCosts.map((cost) => (
+      <CostItem
+        key={cost.id}
+        date={cost.date}
+        description={cost.description}
+        amount={cost.amount}
+      ></CostItem>
+    ))
   }
 
   return (
-      <Card className="costs">
-      <CostsFilter year={selectedYear} onChangeYear={yearChangeHandler} ></CostsFilter>
-        {props.cost.map(cost => 
-          <CostItem
-          date={cost.date}
-          description={cost.description}
-          amount={cost.amount}
-        ></CostItem>
-        )}
-      </Card>
+    <Card className="costs">
+      <CostsFilter
+        year={selectedYear}
+        onChangeYear={yearChangeHandler}
+      ></CostsFilter>
+      {costContent}
+    </Card>
   );
 }
 
-export default CostList
+export default CostList;
